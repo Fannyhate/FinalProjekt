@@ -1,58 +1,48 @@
-# Make sure that you have all these libaries available to run the code successf
+# Make sure that you have all these libaries available to run the code successfully
+import numpy as np
 import pandas as pd
 import yfinance as yf
+import matplotlib.pyplot as plt
+import keras
 
 
-def target_calculate_quarter(financial_columns, num_quarters):
-    counter = 1
-    target_quarter_column = []
-    for column in financial_columns:
-        if counter <= num_quarters:
-            target_quarter_column.append(column)
-            counter += 1
+def get_filter_relevant_history_open_low_close_volume(histories):
+    dict_histories = histories[['Open', 'High', 'Low', 'Close', 'Volume']].to_dict('records')
+    list_of_dates = []
+    for date in histories.axes:
+        for value in date.values:
+            if type(value) is not str:
+                time_str = np.datetime_as_string(value, unit='D')
+                list_of_dates.append(time_str)
 
-    return target_quarter_column
-
-
-def get_financial_axes_index_total_revenue(axes, axes_name):
+    columns = ['Open', 'High', 'Low', 'Close', 'Volume', 'Date', 'Daily Close-Open']
     counter = 0
-    for axe in axes:
-        for axis in axe:
-            if axis != axes_name:
-                counter += 1
-            else:
-                return counter
+
+    for dict_history in dict_histories:
+        dict_history['Date'] = list_of_dates[counter]
+        diff = dict_history['Close'] - dict_history['Open']
+        dict_history['Daily Close-Open'] = diff
+        counter += 1
+
+    filter_dp = pd.DataFrame(dict_histories, columns=columns)
+    return filter_dp
 
 
-def get_market_company_revenue(symbols_company="VWAGY"):
+def get_company_filter_history(symbols_company="VWAGY", period="1mo"):
     # Volkswagen AG market als ticker
-    company = yf.Ticker(symbols_company)
+    company_ticker = yf.Ticker(symbols_company)
 
-    company_short_name = company.info.get("shortName")
+    company_short_name = company_ticker.info.get("shortName")
     print(company_short_name)
-
+    histories_company = company_ticker.history(period=period)
+    filter_histories = get_filter_relevant_history_open_low_close_volume(histories_company)
+    print(filter_histories)
     # get Volkswagen financials per quarter
 
-    financial_volkswagen = company.quarterly_financials
-
-    target_quarters = target_calculate_quarter(financial_volkswagen.columns, 3)
-
-    filter_data = []
-    for target_quarter in target_quarters:
-        financial_info_per_quarter = financial_volkswagen.get(target_quarter)
-
-        company_target_infos = {
-            "Period Revenue ": target_quarter,
-            "Total Revenue": financial_info_per_quarter.get("Total Revenue"),
-            "Company Name ": company_short_name,
-        }
-        filter_data.append(company_target_infos)
-
-    print(filter_data)
+    return filter_histories
 
 
-list_companies = ["VWAGY", "GOOG", "AAPL", "MSFT", "TSLA", "ALV.DE"]
+list_target_companies = ["VWAGY"]
 
-for company in list_companies:
-    get_market_company_revenue(company)
-
+for company in list_target_companies:
+    get_history = get_company_filter_history(company)
