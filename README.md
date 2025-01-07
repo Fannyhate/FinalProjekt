@@ -1,7 +1,6 @@
 # FinalProjekt
 
 # Ziel
-* hey
 
 <mark> </mark>
 
