@@ -84,7 +84,7 @@ def get_filter_relevant_history_open_low_close_volume(histories):
     filter_dp = pd.DataFrame(dict_histories, columns=columns)
     return filter_dp
 
-
+# period is for one year
 def get_company_filter_history(symbols_company="VWAGY", period="1y"):
     # Volkswagen AG market als ticker
     company_ticker = yf.Ticker(symbols_company)

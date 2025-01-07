@@ -2,7 +2,7 @@
 
 # Ziel
 
-* 
+<mark> </mark>
 
 # Installation
 
@@ -13,7 +13,7 @@
 
 # Test Scenario
 
-
+![plot](./image/vw_close_price.png)
 
 # Problem
 
