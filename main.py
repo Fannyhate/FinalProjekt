@@ -8,6 +8,7 @@ import yfinance as yf
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
@@ -42,7 +43,17 @@ def create_lstm_model(input_shape):
     keras_model.compile(optimizer='adam', loss='mean_squared_error')
     return keras_model
 
-
+def create_rnn_model(input_shape):
+    keras_model = tf.keras.Sequential([
+        tf.keras.layers.SimpleRNN(50, return_sequences=True, input_shape=input_shape),
+        Dropout(0.2),
+        tf.keras.layers.SimpleRNN(50, return_sequences=False),
+        Dropout(0.2),
+        Dense(25),
+        Dense(1)
+    ])
+    keras_model.compile(optimizer='adam', loss='mean_squared_error')
+    return keras_model
 # Train and evaluate the model
 def train_model(model, x_train, y_train, epochs=50, batch_size=32):
     model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)
@@ -103,7 +114,8 @@ list_target_companies = ["VWAGY"]
 
 target_property = 'Close'
 actual_property_label = 'Actual Prices'
-predicted_property_label = 'Predicted Prices'
+lstm_predicted_property_label = 'LSTM Predicted Prices'
+rnn_predicted_property_label = 'RNN Predicted Prices'
 
 matplotlib.use('TkAgg')
 fig = matplotlib.pyplot.figure()
@@ -116,20 +128,26 @@ for company in list_target_companies:
     # Preprocess data
     x_train, y_train, scaler = preprocess_data(get_history, feature=target_property, lookback=lookback)
 
-    # Create model
-    create_model = create_lstm_model((x_train.shape[1], 1))
+    # LSTM Create model
+    lstm_create_model = create_lstm_model((x_train.shape[1], 1))
+
+    # RNN create model
+    rnn_create_model = create_rnn_model((x_train.shape[1], 1))
 
     # Train model
-    model = train_model(create_model, x_train, y_train, epochs=10, batch_size=32)
+    lstm_model = train_model(lstm_create_model, x_train, y_train, epochs=10, batch_size=32)
+    rnn_model = train_model(rnn_create_model, x_train, y_train, epochs=10, batch_size=32)
 
     # Predict future prices
-    predictions = predict_future_price(model, get_history[[target_property]].values, lookback, scaler)
+    lstm_predictions = predict_future_price(lstm_model, get_history[[target_property]].values, lookback, scaler)
+    rnn_predictions = predict_future_price(rnn_model, get_history[[target_property]].values, lookback, scaler)
 
     # Plot results
 
     plt.figure(figsize=(12, 6))
     plt.plot(get_history.index[lookback:], get_history[target_property].iloc[lookback:], label=actual_property_label)
-    plt.plot(get_history.index[lookback:], predictions, label=predicted_property_label)
+    plt.plot(get_history.index[lookback:], lstm_predictions, label=lstm_predicted_property_label)
+    plt.plot(get_history.index[lookback:], rnn_predictions, label=rnn_predicted_property_label)
     plt.title(f"{company_name} Stock Price Prediction")
     plt.xlabel("Date")
     plt.ylabel("Price")
