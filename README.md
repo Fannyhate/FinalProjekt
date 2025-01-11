@@ -2,7 +2,7 @@
 
 # Ziel
 
-Das Hauptziel dieses Projekts ist es, mithilfe historischer Daten und Modellen (LSTM und RNN) die zukünftigen Aktienkurse von Automobilhersteller zu prognostizieren und die Leistungsfähigkeit dieser Modelle zu vergleichen. Dieser Vergleich hilft Aktienverkäufern und -käufern, fundierte Entscheidungen zu treffen und potenzielle Gewinne zu maximieren.
+Das Hauptziel dieses Projekts ist es, historische Aktienkurse von Tesla, Ford und VW AG zu analysieren und deren zukünftige Kursentwicklungen vorherzusagen. Es kombiniert datengetriebene Methoden mit Recurrent Neural Networks (LSTM und RNN), um komplexe Zeitreihenmuster zu erkennen. Es muss herausfinden, welche Modell(LSTM und RNN) bessere Vorhersagen für Aktienkurse liefert. Und es hilft das Anlegern bei Entscheidungen, indem es zukünftige Preisentwicklung mit unterschiedlichen Features vorhersagt. 
 
 # Installation
 
