@@ -16,6 +16,10 @@
 <code> pip install yfinance  </code>
 <code> pip install sklearn </code>
 
+<code> pip install tensor flow </code>
+<code> pip install yfinance  </code>
+<code> pip install sklearn </code>
+
 # Test Scenario
 
 ![plot](./image/vw_close_price.png)
