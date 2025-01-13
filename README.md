@@ -10,10 +10,17 @@ Das Hauptziel dieses Projekts ist es, mithilfe historischer Daten und Modellen (
 * Tensor flow 2.18
 * yfinance
 * sklearn
+* Qt Plot
 
 # Test Scenario
 
 ![plot](./image/vw_close_price.png)
+
+![plot](./image/Figure_2.png)
+
+![plot](./image/Figure_1.png)
+
+![plot](./image/Figure_3.png)
 
 # Problem
 
