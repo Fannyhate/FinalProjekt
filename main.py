@@ -111,7 +111,7 @@ def plot_loss(company_name, history, model_type):
     plt.show()
 
 # List of Company
-list_target_companies = ["VWAGY", "TSLA", "FORD"]
+list_target_companies = ["VWAGY", "TSLA", "NSANY","HMC","TM"]
 lookback = 60 # Days of historical data for prediction
 target_property = 'Close'
 
