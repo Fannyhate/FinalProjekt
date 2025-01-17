@@ -27,21 +27,7 @@ def preprocess_data(data, feature='Daily Close-Open', lookback=60):
     x, y = np.array(x), np.array(y)
     x = np.reshape(x, (x.shape[0], x.shape[1], 1))  # LSTM input shape
     return x, y, scaler
-
-
-# Create LSTM model
-def create_lstm_model(input_shape):
-    keras_model = tf.keras.Sequential([
-        LSTM(50, return_sequences=True, input_shape=input_shape),
-        Dropout(0.2),  # 20% reduziert
-        LSTM(50, return_sequences=False),
-        Dropout(0.2),
-        Dense(25),
-        Dense(1)
-    ])
-    keras_model.compile(optimizer='adam', loss='mean_squared_error')
-    return keras_model
-
+# Create RNN Model
 def create_rnn_model(input_shape):
     keras_model = tf.keras.Sequential([
         tf.keras.layers.SimpleRNN(50, return_sequences=True, input_shape=input_shape),
@@ -70,28 +56,44 @@ def predict_future_price(model, data, lookback, scaler):
     train_predictions = model.predict(x_test)
     return scaler.inverse_transform(train_predictions)
 
+def calculate_mse(y_true, y_pred):
+    """
+    Berechnung des Mean Squared Error (MSE):
+    MSE = 1/n * Sum((y_true - y_pred)^2)
+    """
+    n = len(y_true)
+    mse = np.sum((y_true - y_pred) ** 2) / n
+    return mse
+
+def calculate_mde(y_true, y_pred):
+    """
+    Berechnung des Mean Deviation Error (MDE):
+    MDE = 1/n * Sum(|y_true - y_pred|)
+    """
+    n = len(y_true)
+    mde = np.sum(np.abs(y_true - y_pred)) / n
+    return mde
 # Datenaufbereitung für Analyse
 def get_filter_relevant_history_open_low_close_volume(histories):
     histories['Daily Close-Open'] = histories['Close'] - histories['Open']
     return histories[['Open', 'High', 'Low','Close', 'Volume', 'Daily Close-Open']]
 
 # period is for one year
-def get_company_filter_history(symbols_company, period="1y"):
+def get_company_filter_history(symbols_company, period="2y"):
     # Autohersteller market als ticker
     company_ticker = yf.Ticker(symbols_company)
     company_short_name = company_ticker.info.get("shortName")
     print(f"Fetching data for {company_ticker.info.get('company_short_name')}...")
     history = company_ticker.history(period=period)
     filter_histories = get_filter_relevant_history_open_low_close_volume(history)
-    # get Volkswagen financials per quarter
+    # get Company per 1 year
     return filter_histories, company_short_name
 
 # Plot Funktion
-def plot_results(company_name, actual_price, lstm_predictions, rnn_predictions, lookback=60):
+def plot_results(company_name, actual_price, rnn_predictions, lookback=60):
     plt.figure(figsize=(12, 6))
     plt.plot(actual_price.index[lookback:], actual_price[target_property][lookback:],
                  label="Actual Prices")
-    plt.plot(actual_price.index[lookback:], lstm_predictions, label="LSTM Predicted Prices")
     plt.plot(actual_price.index[lookback:], rnn_predictions, label="RNN Predicted Prices")
     plt.title(f'{company_name} Stock Price Prediction')
     plt.xlabel("Date")
@@ -111,7 +113,7 @@ def plot_loss(company_name, history, model_type):
     plt.show()
 
 # List of Company
-list_target_companies = ["VWAGY", "TSLA", "FORD"]
+list_target_companies = ["VWAGY", "TSLA", "NSANY", "HMC", "TM"]
 lookback = 60 # Days of historical data for prediction
 target_property = 'Close'
 
@@ -126,19 +128,23 @@ for symbols_company in list_target_companies:
     # Preprocess data
     x_train, y_train, scaler = preprocess_data(get_history, feature=target_property, lookback=lookback)
 
-    # Create model
-    lstm_create_model = create_lstm_model((x_train.shape[1], 1))
+    # Create model RNN
     rnn_create_model = create_rnn_model((x_train.shape[1], 1))
 
     # Train model
-    lstm_model, lstm_history = train_model(lstm_create_model, x_train, y_train, epochs=10)
-    rnn_model, rnn_history = train_model(rnn_create_model, x_train, y_train, epochs=10)
+    rnn_model, rnn_history = train_model(rnn_create_model, x_train, y_train, epochs=30)
 
     # Predict future prices
-    lstm_predictions = predict_future_price(lstm_model, get_history[[target_property]].values, lookback, scaler)
     rnn_predictions = predict_future_price(rnn_model, get_history[[target_property]].values, lookback, scaler)
 
+
+    mde = calculate_mde(get_history[target_property][lookback:].values, rnn_predictions)
+    print(f"{company_name} MDE: {mde:.4f}")
+
+    # Berechnung des MSE
+    mse = calculate_mse(get_history[target_property][lookback:].values, rnn_predictions)
+    print(f"{company_name} MSE: {mse:.4f}")
+
     # Einzelne Grafiken zeigen
-    plot_results(company_name, get_history, lstm_predictions, rnn_predictions, lookback)
-    plot_loss(company_name, lstm_history, "LSTM")
+    plot_results(company_name, get_history, rnn_predictions, lookback)
     plot_loss(company_name, rnn_history, "RNN")
