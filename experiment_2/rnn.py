@@ -148,3 +148,4 @@ for symbols_company in list_target_companies:
     # Einzelne Grafiken zeigen
     plot_results(company_name, get_history, rnn_predictions, lookback)
     plot_loss(company_name, rnn_history, "RNN")
+#test
