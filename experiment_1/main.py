@@ -152,5 +152,5 @@ for symbols_company in list_target_companies:
     # Einzelne Grafiken zeigen
     plot_results(company_name, get_history, lstm_predictions, lookback)
     plot_loss(company_name, lstm_history, "LSTM")
-#test
+
 
