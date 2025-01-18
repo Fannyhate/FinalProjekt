@@ -32,11 +32,11 @@ Themenfindung: Es war schwierig, zu Beginn ein passendes Thema zu finden, das so
 
 Datenverfügbarkeit: Die Suche nach geeigneten Datenquellen war zeitaufwendig und nicht alle relevanten Daten (z. B. Rohstoffpreise) waren für beide Unternehmen gleichermaßen verfügbar.
 
-Modellauswahl: Die Entscheidung, welche Modelle (z. B. LSTM, ARIMA, RNN) verwendet werden sollten, erforderte umfangreiche Recherche und Tests.
+Modellauswahl: Die Entscheidung, welche Modelle (z. B. LSTM, ARIMA) verwendet werden sollten, erforderte umfangreiche Recherche und Tests.
 
 Datenqualität: Einige historische Daten waren unvollständig oder enthielten Ausreißer, was eine umfangreiche Vorverarbeitung erforderte.
 
-Zeitaufwand: Die Implementierung und Optimierung von Modellen wie LSTM war zeitintensiv aber die RNN war mehr detaillierte.
+Zeitaufwand: Die Implementierung und Optimierung von Modellen wie LSTM war zeitintensiv.
 
 # Zusammenfassung
 
