@@ -73,6 +73,22 @@ def calculate_mde(y_true, y_pred):
     n = len(y_true)
     mde = np.sum(np.abs(y_true - y_pred)) / n
     return mde
+
+# Baseline Vorhersage: Durchschnitt der letzten 60 Schlusskurse
+def baseline_prediction(data, lookback=60):
+    baseline_preds = []
+    for i in range(lookback, len(data)):
+        # Durchschnitt der letzten 60 Schlusskurse
+        avg_price = np.mean(data[i - lookback:i])
+        baseline_preds.append(avg_price)
+    return np.array(baseline_preds)
+
+# Berechnung der MSE und MDE für Baseline
+def evaluate_baseline(actual_price, baseline_preds):
+    baseline_mse = calculate_mse(actual_price, baseline_preds)
+    baseline_mde = calculate_mde(actual_price, baseline_preds)
+    return baseline_mse, baseline_mde
+
 # Datenaufbereitung für Analyse
 def get_filter_relevant_history_open_low_close_volume(histories):
     histories['Daily Close-Open'] = histories['Close'] - histories['Open']
@@ -137,13 +153,22 @@ for symbols_company in list_target_companies:
     # Predict future prices
     rnn_predictions = predict_future_price(rnn_model, get_history[[target_property]].values, lookback, scaler)
 
+    # Baseline Vorhersage
+    baseline_preds = baseline_prediction(get_history[target_property].values, lookback)
 
-    mde = calculate_mde(get_history[target_property][lookback:].values, rnn_predictions)
-    print(f"{company_name} MDE: {mde:.4f}")
+    mde_rnn = calculate_mde(get_history[target_property][lookback:].values, rnn_predictions)
+    #print(f"{company_name} MDE: {mde_rnn:.4f}")
 
     # Berechnung des MSE
-    mse = calculate_mse(get_history[target_property][lookback:].values, rnn_predictions)
-    print(f"{company_name} MSE: {mse:.4f}")
+    mse_rnn = calculate_mse(get_history[target_property][lookback:].values, rnn_predictions)
+    print(f"{company_name} MSE: {mse_rnn:.4f}")
+
+    # Baseline MSE und MDE
+    baseline_mse, baseline_mde = evaluate_baseline(get_history[target_property][lookback:].values, baseline_preds)
+
+    # Ausgabe der Ergebnisse
+    print(f"{company_name} MDE (LSTM): {mde_rnn:.4f}, MSE (LSTM): {mse_rnn:.4f}")
+    print(f"{company_name} MDE (Baseline): {baseline_mde:.4f}, MSE (Baseline): {baseline_mse:.4f}")
 
     # Einzelne Grafiken zeigen
     plot_results(company_name, get_history, rnn_predictions, lookback)
