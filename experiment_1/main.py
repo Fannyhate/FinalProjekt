@@ -76,7 +76,6 @@ def calculate_mde(y_true, y_pred):
     n = len(y_true)
     mde = np.sum(np.abs(y_true - y_pred)) / n
     return mde
-#
 
 # Datenaufbereitung für Analyse
 def get_filter_relevant_history_open_low_close_volume(histories):
@@ -152,5 +151,5 @@ for symbols_company in list_target_companies:
     # Einzelne Grafiken zeigen
     plot_results(company_name, get_history, lstm_predictions, lookback)
     plot_loss(company_name, lstm_history, "LSTM")
-#
+
 
