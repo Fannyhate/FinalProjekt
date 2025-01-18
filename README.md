@@ -22,6 +22,8 @@ Das Hauptziel dieses Projekts ist es, mithilfe historischer Daten und Modellen (
 
 ![plot](./image/Figure_3.png)
 
+![plot](./image/Figure_6.png)
+
 # Problem
 
 Während des Projekts traten verschiedene Herausforderungen auf:

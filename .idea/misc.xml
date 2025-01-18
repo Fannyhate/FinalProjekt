@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Black">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <option name="sdkName" value="Python 3.12 (yfinance)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (adult-income-prediction-Fannyhate)" project-jdk-type="Python SDK" />
@@ -10,4 +11,9 @@
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (FinalProjekt)" project-jdk-type="Python SDK" />
 >>>>>>> 1dc571915830df60e2cca34ea4dc4fe300ef4c5a
+=======
+    <option name="sdkName" value="Python 3.13" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (FinalProjekt)" project-jdk-type="Python SDK" />
+>>>>>>> master
 </project>
