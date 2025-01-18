@@ -76,7 +76,7 @@ def calculate_mde(y_true, y_pred):
     n = len(y_true)
     mde = np.sum(np.abs(y_true - y_pred)) / n
     return mde
-
+#
 
 # Datenaufbereitung für Analyse
 def get_filter_relevant_history_open_low_close_volume(histories):
