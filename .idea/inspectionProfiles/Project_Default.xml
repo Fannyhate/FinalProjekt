@@ -4,13 +4,19 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
+<<<<<<< HEAD
           <list size="2">
             <item index="0" class="java.lang.String" itemvalue="torch" />
             <item index="1" class="java.lang.String" itemvalue="fastapi" />
+=======
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="torch" />
+>>>>>>> 1dc571915830df60e2cca34ea4dc4fe300ef4c5a
           </list>
         </value>
       </option>
     </inspection_tool>
+<<<<<<< HEAD
     <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredErrors">
         <list>
@@ -25,5 +31,7 @@
         </list>
       </option>
     </inspection_tool>
+=======
+>>>>>>> 1dc571915830df60e2cca34ea4dc4fe300ef4c5a
   </profile>
 </component>

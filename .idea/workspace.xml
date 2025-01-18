@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8061492f-be5c-40b7-918e-2160b47d172a" name="Changes" comment="merge old commit with new commit">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/FinalProjekt.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiment_2/rnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_01_2025_21_44__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_01_2025_21_44__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment_1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiment_1/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/vw_close_price.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
     </list>
     <list id="c1db8028-766f-4b01-bff7-7d32e9148dc4" name="Changes by LeParpaing" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +38,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "0e7b2c9d",
+    "git-widget-placeholder": "Merging main",
     "last_opened_file_path": "C:/Users/ofann/PycharmProjects/FinalProjekt",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -187,6 +195,17 @@
     <MESSAGE value="add more Company" />
     <MESSAGE value="merge old commit with new commit" />
     <option name="LAST_COMMIT_MESSAGE" value="merge old commit with new commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/experiment_1/main.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/FinalProjekt$main.coverage" NAME="main Coverage Results" MODIFIED="1736164068390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
