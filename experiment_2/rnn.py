@@ -161,13 +161,13 @@ for symbols_company in list_target_companies:
 
     # Berechnung des MSE
     mse_rnn = calculate_mse(get_history[target_property][lookback:].values, rnn_predictions)
-    print(f"{company_name} MSE: {mse_rnn:.4f}")
+    #print(f"{company_name} MSE: {mse_rnn:.4f}")
 
     # Baseline MSE und MDE
     baseline_mse, baseline_mde = evaluate_baseline(get_history[target_property][lookback:].values, baseline_preds)
 
     # Ausgabe der Ergebnisse
-    print(f"{company_name} MDE (LSTM): {mde_rnn:.4f}, MSE (LSTM): {mse_rnn:.4f}")
+    print(f"{company_name} MDE (RNN): {mde_rnn:.4f}, MSE (RNN): {mse_rnn:.4f}")
     print(f"{company_name} MDE (Baseline): {baseline_mde:.4f}, MSE (Baseline): {baseline_mse:.4f}")
 
     # Einzelne Grafiken zeigen
