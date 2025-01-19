@@ -12,17 +12,65 @@ Das Hauptziel dieses Projekts ist es, mithilfe historischer Daten und Modellen (
 * sklearn
 * Qt Plot
 
-# Test Scenario
+#	Kurzbeschreibung
 
-![figure_rnn_lstm_vw.PNG](image/figure_rnn_lstm_vw.PNG)
+Das Ziel dieses Experiments ist die Vorhersage der Schlusskurse von Aktien der Automobilherstellers mithilfe eines LSTM-Modells, basierend auf historischen Daten und Merkmalen wie täglichen Kursänderungen.
 
-![plot](./image/Figure_2.png)
+#	Datenbeschaffung
 
-![plot](./image/Figure_1.png)
+Mit der yfinance-Bibliothek werden historische, täglich angepasste Aktienkurse von Automobilhersteller heruntergeladen.
 
-![plot](./image/Figure_3.png)
+#	Zielvariable(Target)
 
-![plot](./image/Figure_6.png)
+Die Zielvariable ist der Schlusskurs(Close) einer Aktie am folgenden Tag.
+
+
+#   Inputvariable(Features)
+
+Für jede Aktie wurden folgende Merkmale berechnet: 
+1.	Tägliche Kürsänderung(Daily Close-Open): Diefferenz zwischen Schlusskurs und Eröffnungskurs.
+2.	Zusätzliche Merkmale: High, Low, Open, Close , Handelsvolume 
+
+
+#	Modellarchitektur
+*   Zwei LSTM-Schichten mit jeweils 50 Neuronen. Die erste Schicht gibt Sequenzen zurück, während die zweite dies nicht tut. 
+*	Dropout zur Reduzierung von Overfitting (20%)
+*	Zwei Dense, wobei die letzte die Vorhersage des Schlusskurses übernimmt.
+
+#	Hyperparameter
+*	Lookback: Verwendung der letzten 60 Tage zur Vorhersage.
+*	Optimizer: Adam
+*	Loss-Funktion: Mean Squared Error(MSE).
+
+#	Bewertungskriterien: Primäre Metriken
+*	Mittlerer Squared Error(MSE): zwischen den tatsächlichen und vorhersagten Schlusskursen.
+*	Mittlerer Directional Error (MDE)
+
+#	Baseline
+Vergleich der Modellleistung mit einer einfachen Baseline, die den Durchschnitt der letzten 60 Schlusskurse als Vorhersage verwendet. 
+
+
+# Ergebnis
+
+![plot](./image/VW_LSTM.png)
+![plot](./image/VW_LSTM_Loss.png)
+![plot](./image/VW_baseline.png)
+
+![plot](./image/Tesla_lstm.png)
+![plot](./image/Tesla_lstm_loss.png)
+![plot](./image/Tesla_baseline.png)
+
+![plot](./image/Nissan_lstm.png)
+![plot](./image/Nissan_lstm_loss.png)
+![plot](./image/Nissan_baseline.png)
+
+![plot](./image/Honda_lstm.png)
+![plot](./image/Honda_lstm_loss.png)
+![plot](./image/Honda_baseline.png)
+
+![plot](./image/Toyota_lstm.png)
+![plot](./image/Toyota_lstm_loss.png)
+![plot](./image/Toyota_baseline.png)
 
 # Problem
 
