@@ -53,6 +53,21 @@ def calculate_mse(y_true, y_pred):
     return mse
 
 
+    # Baseline Vorhersage: Durchschnitt der letzten 60 Schlusskurse
+def baseline_prediction( data, lookback=60):
+    baseline_preds = []
+    for i in range(lookback, len(data)):
+        # Durchschnitt der letzten 60 Schlusskurse
+        avg_price = np.mean(data[i - lookback:i])
+        baseline_preds.append(avg_price)
+    return np.array(baseline_preds)
+
+# Berechnung der MSE und MDE für Baseline
+def evaluate_baseline( actual_price, baseline_preds):
+    baseline_mse = calculate_mse(actual_price, baseline_preds)
+    baseline_mde = calculate_mde(actual_price, baseline_preds)
+    return baseline_mse, baseline_mde
+
 class TrainModel:
     def __init__(self, symbols_company, target_property):
         self.company_short_name = None
@@ -109,6 +124,7 @@ class TrainModel:
         plt.ylabel("Loss")
         plt.legend()
         plt.show()
+
 
 
 class ITrainingModel(object):

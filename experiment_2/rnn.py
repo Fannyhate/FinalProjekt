@@ -6,7 +6,7 @@ import tensorflow as tf
 from keras.src.layers import SimpleRNN
 from tensorflow.keras.layers import Dense, Dropout
 
-from trainer.training import TrainModel, calculate_mde, predict_future_price, train_model, calculate_mse, ITrainingModel
+from trainer.training import TrainModel, calculate_mde, predict_future_price, train_model, calculate_mse, ITrainingModel, evaluate_baseline, baseline_prediction
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -58,12 +58,26 @@ for symbols_company in list_target_companies:
     # Predict future prices
     rnn_predictions = predict_future_price(rnn_model, get_history[[target_property]].values, lookback, scaler)
 
+    # Baseline Vorhersage
+    baseline_preds = baseline_prediction(get_history[target_property].values, lookback)
+
+    mde_rnn = calculate_mde(get_history[target_property][lookback:].values, rnn_predictions)
+
     mde = calculate_mde(get_history[target_property][lookback:].values, rnn_predictions)
     print(f"{company_name} MDE: {mde:.4f}")
 
     # Berechnung des MSE
     mse = calculate_mse(get_history[target_property][lookback:].values, rnn_predictions)
     print(f"{company_name} MSE: {mse:.4f}")
+
+    mse_rnn = calculate_mse(get_history[target_property][lookback:].values, rnn_predictions)
+
+    # Baseline MSE und MDE
+    baseline_mse, baseline_mde = evaluate_baseline(get_history[target_property][lookback:].values, baseline_preds)
+
+    # Ausgabe der Ergebnisse
+    print(f"{company_name} MDE (RNN): {mde_rnn:.4f}, MSE (RNN): {mse_rnn:.4f}")
+    print(f"{company_name} MDE (Baseline): {baseline_mde:.4f}, MSE (Baseline): {baseline_mse:.4f}")
 
     # Einzelne Grafiken zeigen
     training.plot_results(get_history, rnn_predictions, "RNN Predicted Prices", lookback)

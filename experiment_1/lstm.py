@@ -5,7 +5,8 @@ from abc import ABC
 import tensorflow as tf
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 
-from trainer.training import TrainModel, train_model, predict_future_price, calculate_mde, calculate_mse, ITrainingModel
+from trainer.training import TrainModel, train_model, predict_future_price, calculate_mde, calculate_mse, \
+    ITrainingModel, evaluate_baseline, baseline_prediction
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -56,12 +57,21 @@ for symbols_company in list_target_companies:
     lstm_predictions = predict_future_price(lstm_model, get_history[[target_property]].values, lookback,
                                             scaler)
 
-    mde = calculate_mde(get_history[target_property][lookback:].values, lstm_predictions)
-    print(f"{company_name} MDE: {mde:.4f}")
+    # Baseline Vorhersage
+    baseline_preds = baseline_prediction(get_history[target_property].values, lookback)
+
+    mde_lstm = calculate_mde(get_history[target_property][lookback:].values, lstm_predictions)
+    # print(f"{company_name} MDE: {mde_lstm:.4f}")
 
     # Berechnung des MSE
-    mse = calculate_mse(get_history[target_property][lookback:].values, lstm_predictions)
-    print(f"{company_name} MSE: {mse:.4f}")
+    mse_lstm = calculate_mse(get_history[target_property][lookback:].values, lstm_predictions)
+
+    # Baseline MSE und MDE
+    baseline_mse, baseline_mde = evaluate_baseline(get_history[target_property][lookback:].values, baseline_preds)
+
+    # Ausgabe der Ergebnisse
+    print(f"{company_name} MDE (LSTM): {mde_lstm:.4f}, MSE (LSTM): {mse_lstm:.4f}")
+    print(f"{company_name} MDE (Baseline): {baseline_mde:.4f}, MSE (Baseline): {baseline_mse:.4f}")
 
     # Einzelne Grafiken zeigen
     training.plot_results(get_history, lstm_predictions, "LSTM Predicted Prices", lookback)
