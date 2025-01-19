@@ -14,7 +14,7 @@ Das Hauptziel dieses Projekts ist es, mithilfe historischer Daten und Modellen (
 
 # Test Scenario
 
-![plot](./image/vw_close_price.png)
+![figure_rnn_lstm_vw.PNG](image/figure_rnn_lstm_vw.PNG)
 
 ![plot](./image/Figure_2.png)
 
