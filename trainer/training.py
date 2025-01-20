@@ -126,7 +126,7 @@ class TrainModel:
         plt.show()
 
 
-
+# Interface for different types of model. 
 class ITrainingModel(object):
     def __init__(self):
         pass
